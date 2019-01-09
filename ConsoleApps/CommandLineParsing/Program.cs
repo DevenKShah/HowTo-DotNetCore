@@ -15,7 +15,10 @@ namespace CommandLineParsing
 
         private static async Task RunService(Options arg)
         {
-            Console.WriteLine($"{arg.InstanceName}: Hello World!");
+            for(var i =  0; i < arg.GreetingRepeatCount; i++)
+            {
+                Console.WriteLine($"{arg.InstanceName}: {arg.Greeting} World!");
+            }
         }
 
         private static Task ThrowArgumentException(IEnumerable<Error> arg)
@@ -30,7 +33,11 @@ namespace CommandLineParsing
         [Option('n', "name", Required=true, HelpText="Name of the instance")]
         public string InstanceName { get; set; }
 
-        //[Option()]
+        [Value(0, MetaName="The greeting", Required=true, HelpText="First value is the greeting")]
+        public string Greeting { get; set; }
+
+        [Value(1, MetaName="Greeting repeat count", Required=false, Default=1, HelpText="Second value is the number of times greeting will be shown")]
+        public int GreetingRepeatCount { get; set; }
     }
 
     internal enum SystemErrorCode

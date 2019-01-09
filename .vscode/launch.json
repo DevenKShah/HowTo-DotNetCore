@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/ConsoleApps/CommandLineParsing/bin/Debug/netcoreapp2.2/CommandLineParsing.dll",
-            "args": ["-n", "MyApp"],
+            "args": ["Helo", "-n", "MyApp", "2"],
             "cwd": "${workspaceFolder}/ConsoleApps/CommandLineParsing",
             "console": "internalConsole",
             "stopAtEntry": false,
