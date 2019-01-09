@@ -15,6 +15,18 @@
             "console": "internalConsole",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "name": "CommandLineParsing show help",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/ConsoleApps/CommandLineParsing/bin/Debug/netcoreapp2.2/CommandLineParsing.dll",
+            "args": ["--help"],
+            "cwd": "${workspaceFolder}/ConsoleApps/CommandLineParsing",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
         }
     ]
 }
