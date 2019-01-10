@@ -9,16 +9,31 @@ namespace CommandLineParsing
     {
         static void Main(string[] args)
         {
-            Parser.Default.ParseArguments<Options>(args)
-                .MapResult(RunService, ThrowArgumentException);
+            Parser.Default.ParseArguments<Options, StaticGreetingOptions>(args)
+                .MapResult(
+                    (Options opts) => RunService(opts), 
+                    (StaticGreetingOptions opts) => RunSomeOtherService(opts),
+                    ThrowArgumentException);
         }
 
-        private static async Task RunService(Options arg)
+        private static Task RunSomeOtherService(StaticGreetingOptions arg)
+        {
+            for(var i =  0; i < arg.GreetingRepeatCount; i++)
+            {
+                Console.WriteLine($"Hello crappy World!");
+            }
+
+            return Task.CompletedTask;
+        }
+
+
+        private static Task RunService(Options arg)
         {
             for(var i =  0; i < arg.GreetingRepeatCount; i++)
             {
                 Console.WriteLine($"{arg.InstanceName}: {arg.Greeting} World!");
             }
+            return Task.CompletedTask;
         }
 
         private static Task ThrowArgumentException(IEnumerable<Error> arg)
@@ -26,6 +41,15 @@ namespace CommandLineParsing
             Environment.Exit((int)SystemErrorCode.ERROR_INVALID_PARAMETER);
             return null;
         }
+    }
+
+
+    [Verb("static-greeting", HelpText="Shows a default greeting")]
+    class StaticGreetingOptions
+    {
+        [Value(0, MetaName="Greeting repeat count", Required=false, Default=1, HelpText="Second value is the number of times greeting will be shown")]
+        public int GreetingRepeatCount { get; set; }
+
     }
 
     class Options
